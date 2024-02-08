@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   zookeeper:
     image: wurstmeister/zookeeper
@@ -9,7 +9,7 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://localhost:9093,OUTSIDE://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka1:9093,OUTSIDE://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
@@ -17,16 +17,16 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: kafka1
-      KAFKA_OPTS: "-javaagent:/opt/kafka_2.0.0/libs/jmx_prometheus_javaagent.jar=9101:/opt/kafka_2.0.0/config/kafka-2_0_0.yml"
+      KAFKA_OPTS: "-javaagent:/opt/kafka_0.8.2/libs/jmx_prometheus_javaagent.jar=9101:/opt/kafka_0.8.2/config/kafka-0-8-2.yml"
     volumes:
-      - ./kafka-2_0_0.yml:/opt/kafka_2.0.0/config/kafka-2_0_0.yml
-      - ./jmx_prometheus_javaagent-0.16.0.jar:/opt/kafka_2.0.0/libs/jmx_prometheus_javaagent.jar
+      - ./kafka-0-8-2.yml:/opt/kafka_0.8.2/config/kafka-0-8-2.yml
+      - ./jmx_prometheus_javaagent-0.15.0.jar:/opt/kafka_0.8.2/libs/jmx_prometheus_javaagent.jar
   kafka2:
     image: wurstmeister/kafka
     ports:
       - "9093:9092"
     environment:
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://localhost:9093,OUTSIDE://localhost:9093
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka2:9092,OUTSIDE://localhost:9093
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
@@ -34,16 +34,16 @@ services:
       KAFKA_BROKER_ID: 2
       KAFKA_JMX_PORT: 9102
       KAFKA_JMX_HOSTNAME: kafka2
-      KAFKA_OPTS: "-javaagent:/opt/kafka_2.0.0/libs/jmx_prometheus_javaagent.jar=9102:/opt/kafka_2.0.0/config/kafka-2_0_0.yml"
+      KAFKA_OPTS: "-javaagent:/opt/kafka_0.8.2/libs/jmx_prometheus_javaagent.jar=9102:/opt/kafka_0.8.2/config/kafka-0-8-2.yml"
     volumes:
-      - ./kafka-2_0_0.yml:/opt/kafka_2.0.0/config/kafka-2_0_0.yml
-      - ./jmx_prometheus_javaagent-0.16.0.jar:/opt/kafka_2.0.0/libs/jmx_prometheus_javaagent.jar
+      - ./kafka-0-8-2.yml:/opt/kafka_0.8.2/config/kafka-0-8-2.yml
+      - ./jmx_prometheus_javaagent-0.15.0.jar:/opt/kafka_0.8.2/libs/jmx_prometheus_javaagent.jar
   kafka3:
     image: wurstmeister/kafka
     ports:
       - "9094:9092"
     environment:
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://localhost:9093,OUTSIDE://localhost:9094
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka3:9093,OUTSIDE://localhost:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
@@ -51,10 +51,10 @@ services:
       KAFKA_BROKER_ID: 3
       KAFKA_JMX_PORT: 9103
       KAFKA_JMX_HOSTNAME: kafka3
-      KAFKA_OPTS: "-javaagent:/opt/kafka_2.0.0/libs/jmx_prometheus_javaagent.jar=9103:/opt/kafka_2.0.0/config/kafka-2_0_0.yml"
+      KAFKA_OPTS: "-javaagent:/opt/kafka_0.8.2/libs/jmx_prometheus_javaagent.jar=9103:/opt/kafka_0.8.2/config/kafka-0-8-2.yml"
     volumes:
-      - ./kafka-2_0_0.yml:/opt/kafka_2.0.0/config/kafka-2_0_0.yml
-      - ./jmx_prometheus_javaagent-0.16.0.jar:/opt/kafka_2.0.0/libs/jmx_prometheus_javaagent.jar
+      - ./kafka-0-8-2.yml:/opt/kafka_0.8.2/config/kafka-0-8-2.yml
+      - ./jmx_prometheus_javaagent-0.15.0.jar:/opt/kafka_0.8.2/libs/jmx_prometheus_javaagent.jar
   prometheus:
    image: prom/prometheus:v2.30.3
    ports:
@@ -67,4 +67,3 @@ services:
    image: grafana/grafana:latest
    ports:
      - "3000:3000"
-
